@@ -64,6 +64,9 @@ void setup() {
     free(conf);
     Transport_init();
     EC_start();
+  } else {
+    free(exec_cxt);
+    free(conf);
   }
 }
 
@@ -190,12 +193,11 @@ PRIVATE void _SendProfile() {
  * Packet Handler in Error State
  */
 PRIVATE void _PacketHandlerOnError() {
-  char intface;
   int8_t ret = RTNO_OK;
 
   int8_t retval = EC_error();
   if(retval < 0) ret = RTNO_ERROR;
-  Transport_SendPacket(intface, 1, &ret);
+  Transport_SendPacket(ONERROR, 1, &ret);
 }
 
 
